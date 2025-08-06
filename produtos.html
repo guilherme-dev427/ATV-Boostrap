@@ -225,6 +225,20 @@
             body.classList.toggle('dark-mode');
             localStorage.setItem('modoEscuro', body.classList.contains('dark-mode'));
         });
+        function adicionarAoCarrinho(nome, preco) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+            const produtoExistente = carrinho.find(item => item.nome === nome);
+
+            if (produtoExistente) {
+                produtoExistente.quantidade++;
+            } else {
+                carrinho.push({ nome, preco, quantidade: 1 });
+            }
+
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            alert(`Produto "${nome}" adicionado ao carrinho!`);
+        }
     </script>
 </body>
 
