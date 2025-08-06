@@ -80,8 +80,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="localizacao.html">Localização</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="carrinho.html">Carrinho 🛒</a>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link active" href="carrinho.html">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span id="cart-count"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
                     </li>
                     <button id="darkModeToggle" class="btn btn-outline-secondary ms-3">🌙</button>
                 </ul>
@@ -163,6 +169,17 @@
             body.classList.toggle('dark-mode');
             localStorage.setItem('modoEscuro', body.classList.contains('dark-mode'));
         });
+        function atualizarQuantidadeCarrinho() {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            let quantidadeTotal = carrinho.reduce((total, item) => total + (item.quantidade || 1), 0);
+            const contador = document.getElementById('cart-count');
+            if (contador) {
+                contador.textContent = quantidadeTotal;
+                contador.style.display = quantidadeTotal > 0 ? 'inline-block' : 'none';
+            }
+        }
+
+        window.addEventListener('load', atualizarQuantidadeCarrinho);
     </script>
 </body>
 
